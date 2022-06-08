@@ -23,13 +23,15 @@ def start_game(request):
 
 def on_game(request):
     quiz = Quiz.restore(request)
+
     if not quiz:
         return render(request, 'quiz/error.html')
-
+        
     answer = request.POST.get('answer')
     if answer:
+        quiz.just_started = False
         quiz.check_answer(answer)
-
+        
     try:
         question = quiz.get_question()
         quiz.save(request)
@@ -39,10 +41,12 @@ def on_game(request):
 
 
 def finish(request):
-    import pdb
-    pdb.set_trace()
     quiz = Quiz.restore(request)
-    result = quiz.get_result()
-    quiz.stop(request)
+    try:
+        result = quiz.get_result()
+        quiz.stop(request)
+    except AttributeError as e:
+        result = {}
     return render(request, 'quiz/finish.html', result)
+
 

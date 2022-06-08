@@ -33,8 +33,9 @@ class Quiz:
     number_of_questions: int
     difficulty: str
     questions: List[Question]
-    current_question: int
     number_of_correct_answers: int
+    current_question: int
+    just_started: bool = field(default=True)
 
     @classmethod
     def create_game(cls, number_of_questions: int, difficulty: str, category: str):
@@ -64,5 +65,10 @@ class Quiz:
 
     def get_question(self):
         question = self.questions[self.current_question]
-        self.current_question += 1
+        if self.just_started:
+            question = self.questions[0]
+            self.current_question = 1
+        else:
+            question = self.questions[self.current_question]
+            self.current_question += 1
         return question
