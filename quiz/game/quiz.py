@@ -39,7 +39,10 @@ class Quiz:
 
     @classmethod
     def create_game(cls, number_of_questions: int, difficulty: str, category: str):
-        raw_questions = ApiClient.get_questions(number_of_questions, category ,difficulty)
+        response_code, raw_questions = ApiClient.get_questions(number_of_questions, category ,difficulty)
+        # TODO: handle response code 1
+        import pdb
+        pdb.set_trace()
         questions = list([Question(**raw_question) for raw_question in raw_questions])
         return Quiz(number_of_questions, difficulty, questions, 0, 0)
 

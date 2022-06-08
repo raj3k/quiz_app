@@ -1,4 +1,5 @@
 from requests import get
+from operator import itemgetter
 
 
 DIFFICULTY = ("easy", "medium", "hard")
@@ -17,5 +18,5 @@ class ApiClient:
 
     @classmethod
     def get_questions(cls, number_of_questions, category, difficulty):
-        results = get(ApiClient.QUESTIONS_URL.format(number_of_questions, category, difficulty)).json()['results']
-        return results
+        response_code, results = itemgetter('response_code', 'results')(get(ApiClient.QUESTIONS_URL.format(number_of_questions, category, difficulty)).json())
+        return response_code, results
