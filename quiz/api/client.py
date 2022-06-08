@@ -1,4 +1,3 @@
-from sre_parse import CATEGORIES
 from requests import get
 
 
@@ -15,3 +14,8 @@ class ApiClient:
         result = {"categories": get(ApiClient.CATEGORIES_URL).json()["trivia_categories"], 
                 "max_questions": MAX_QUESTIONS, "difficulty": DIFFICULTY}
         return result
+
+    @classmethod
+    def get_questions(cls, number_of_questions, category, difficulty):
+        results = get(ApiClient.QUESTIONS_URL.format(number_of_questions, category, difficulty)).json()['results']
+        return results
