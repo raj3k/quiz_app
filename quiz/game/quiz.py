@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 from random import shuffle
 from typing import List
+from html import unescape
 
 from quiz.api.client import ApiClient
 
@@ -19,8 +20,10 @@ class Question:
         return answer == self.correct_answer
 
     def __post_init__(self):
+        self.question = unescape(self.question)
         self.answers.extend(self.incorrect_answers)
         self.answers.append(self.correct_answer)
+        self.answers = [unescape(answer) for answer in self.answers]
         shuffle(self.answers)
 
 
@@ -35,7 +38,7 @@ class Quiz:
 
     @classmethod
     def create_game(cls, number_of_questions: int, difficulty: str, category: str):
-        raw_questions = ApiClient.get_questions(difficulty, number_of_questions, category)
+        raw_questions = ApiClient.get_questions(number_of_questions, category ,difficulty)
         questions = list([Question(**raw_question) for raw_question in raw_questions])
         return Quiz(number_of_questions, difficulty, questions, 0, 0)
 
@@ -48,3 +51,18 @@ class Quiz:
     @classmethod
     def restore(cls, request):
         return request.session.get('saved_quiz')
+
+    def check_answer(self, answer):
+        if self.questions[self.current_question - 1].correct_answer == answer:
+            self.number_of_correct_answers += 1
+
+    def get_result(self):
+        return {
+            'correct_answers': self.number_of_correct_answers,
+            'all_questions': self.number_of_questions
+        }
+
+    def get_question(self):
+        question = self.questions[self.current_question]
+        self.current_question += 1
+        return question
