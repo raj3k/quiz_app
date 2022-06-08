@@ -15,7 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from quiz import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.index, name='index'),
+    path('start_game', views.start_game, name='start_game'),
+    path('on_game', views.on_game, name='on_game'),
+    path('finish', views.finish, name='finish'),
 ]
