@@ -28,7 +28,6 @@ def on_game(request):
         return render(request, 'quiz/error.html')
     
     answer = request.POST.get('answer')
-
     if answer:
         quiz.just_started = False
         quiz.check_answer(answer)
