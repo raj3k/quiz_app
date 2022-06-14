@@ -1,9 +1,11 @@
 from django.shortcuts import redirect, render
 
+from django.views.decorators.cache import cache_page
 from quiz.game.quiz import Quiz
 from .api import ApiClient
 
 
+@cache_page(60 * 15)
 def index(request):
     try:
         quiz = ApiClient.get_quiz_options()
@@ -35,8 +37,9 @@ def on_game(request):
     try:
         question = quiz.get_question()
         quiz.save(request)
-        return render(request, 'quiz/game.html', vars(question))
-    except IndexError as e:
+        context = vars(question)
+        return render(request, 'quiz/game.html', context=context)
+    except IndexError:
         return redirect('/finish')
 
 
@@ -45,7 +48,7 @@ def finish(request):
     try:
         result = quiz.get_result()
         quiz.stop(request)
-    except AttributeError as e:
+    except AttributeError:
         result = {}
     return render(request, 'quiz/finish.html', result)
 
