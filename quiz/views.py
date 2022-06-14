@@ -1,9 +1,11 @@
 from django.shortcuts import redirect, render
 
+from django.views.decorators.cache import cache_page
 from quiz.game.quiz import Quiz
 from .api import ApiClient
 
 
+@cache_page(60 * 15)
 def index(request):
     try:
         quiz = ApiClient.get_quiz_options()
