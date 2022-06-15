@@ -21,6 +21,7 @@
 - [ ] Current number of question (progress bar using Bootstrap library) -> currently working on that
 - [ ] time cap for question
 - [ ] limited hints in quiz
+- [ ] Documentation
 - [ ] Ranking
 
 <h3>How to run application</h3>
