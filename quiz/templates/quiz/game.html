@@ -4,6 +4,10 @@
 
 <div class="container">
     <div class="jumbotron">
+        <h6>Question {{ current_question }} from {{ number_of_questions }}</h6>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width: {{ completion_percent }}%" aria-valuenow="{{ current_question }}" aria-valuemin="1" aria-valuemax="{{ number_of_questions }}"></div>
+        </div>
         <div class="panel panel-primary">
             <form action="" method="post">
             {% csrf_token %}
@@ -23,7 +27,7 @@
                 </div>
                 <hr>
                 <div class="panel-footer">
-                    <button href="#" class="btn btn-primary " type="submit">Dalej</button>
+                    <button href="#" class="btn btn-primary " type="submit">Next question</button>
                 </div>
             </form>
         </div>

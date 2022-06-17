@@ -96,6 +96,8 @@ class Quiz:
         '''
         raw_questions = ApiClient.get_questions(number_of_questions, category ,difficulty)
         questions = list([Question(**raw_question) for raw_question in raw_questions])
+        if number_of_questions != len(questions):
+            number_of_questions = len(questions)
         return Quiz(number_of_questions, difficulty, questions, 0, 0)
 
     def save(self, request: WSGIRequest) -> None:
@@ -125,7 +127,7 @@ class Quiz:
         '''
         return {
             'correct_answers': self.number_of_correct_answers,
-            'all_questions': len(self.questions)
+            'all_questions': self.number_of_questions
         }
 
     def get_question(self) -> Question:

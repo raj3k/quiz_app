@@ -38,6 +38,10 @@ def on_game(request):
         question = quiz.get_question()
         quiz.save(request)
         context = vars(question)
+
+        context["current_question"] = quiz.current_question
+        context["number_of_questions"] = quiz.number_of_questions
+        context["completion_percent"] = int((context["current_question"] / context["number_of_questions"]) * 100)
         return render(request, 'quiz/game.html', context=context)
     except IndexError:
         return redirect('/finish')
