@@ -56,8 +56,6 @@ class Question:
         self.answers = [unescape(answer) for answer in self.answers]
         shuffle(self.answers)
 
-        # TODO: numerowanie pytan -> w post_init lub dodac pole w klasie i przy pobieraniu pytan je zliczac i numerowac
-
 
 @dataclass
 class Quiz:
@@ -96,7 +94,7 @@ class Quiz:
         List of Question objects is created from loaded dictionary with questions.
         Returns a Quiz object with provided options.
         '''
-        raw_questions = ApiClient.get_questions(number_of_questions, category ,difficulty) # TODO: moze numerowac pytania w tym miejscu i podac do klasy Question numery
+        raw_questions = ApiClient.get_questions(number_of_questions, category ,difficulty)
         questions = list([Question(**raw_question) for raw_question in raw_questions])
         return Quiz(number_of_questions, difficulty, questions, 0, 0)
 
