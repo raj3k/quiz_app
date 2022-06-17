@@ -18,8 +18,8 @@
 </ul>
 
 \### <h3>Features planned to implement:</h3>
-- [ ] Current number of question (progress bar using Bootstrap library) -> currently working on that
-- [ ] time cap for question
+- [x] Current number of question (progress bar using Bootstrap library)
+- [ ] time cap for question -> currently working on that
 - [ ] limited hints in quiz
 - [ ] Documentation
 - [ ] Ranking
