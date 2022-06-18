@@ -20,7 +20,7 @@
                     {% for answer in answers %}
                     <div class="radio">
                         <label>
-                            <input type="radio" name="answer" id="" value="{{ answer }}" {% if forloop.first %}checked{% endif %}> {{ answer }}
+                            <input type="radio" name="answer" value="{{ answer }}" {% if forloop.first %}checked{% endif %}> {{ answer }}
                         </label>
                     </div>
                     {% endfor %}
